@@ -1,0 +1,24 @@
+{
+    "teams": [
+        {
+            "name": "Crimson Wings",
+            "abbrev": "CW",
+            "logo": "/logos/cw.png"
+        }, 
+        {
+            "name": "Minkz",
+            "abbrev": "MKZ",
+            "logo": "/logos/mkz.png"
+        },
+        {
+            "name": "Spacestation Gaming",
+            "abbrev": "SSG",
+            "logo": "/logos/ssg.png"
+        },
+        {
+            "name": "G2 Esports",
+            "abbrev": "G2",
+            "logo": "/logos/g2.png"
+        }
+    ]
+}
