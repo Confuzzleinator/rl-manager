@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts">
-import { route } from 'quasar/wrappers'
 import { db } from 'src/ts/db/database'
 import { defineComponent } from 'vue'
 

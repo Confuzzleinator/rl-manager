@@ -6,7 +6,7 @@
         <div class="row justify-center q-gutter-md">
             <div class="col-2 q-gutter-lg">
                 <q-input label="Name" v-model="name"/>
-                <q-input label="Team"/>
+                <q-select label="Team" v-model="team" :options="teamsSelection"/>
                 <q-input label="Difficulty"/>
                 <div class="row justify-center q-gutter-lg">
                     <q-btn label="Create" color="primary" @click="create()"/>
@@ -32,16 +32,33 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import newSaveGame from '../ts/meta/newSaveGame'
+import teamsJson from '../data/teams.json'
 
 export default defineComponent({
     name: 'PageNewGame',
     setup() {
         let name = ''
+        let team
+        let teamsSelection = []
+
+        let index = 1
+        for(const t of teamsJson.teams) {
+            teamsSelection.push({
+                label: t.name,
+                value: index
+            })
+
+            ++index
+        }
+
+        team = ref(teamsSelection[0])
 
         return {
-            name
+            name,
+            team,
+            teamsSelection
         }
     },
     methods: {
@@ -49,7 +66,7 @@ export default defineComponent({
             await this.$router.push('/')
         },
         async create() {
-            const id = await newSaveGame(this.name)
+            const id = await newSaveGame(this.name, this.team.value)
             await this.$router.push('/g/' + id.toString())
         }
     }

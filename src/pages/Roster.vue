@@ -8,8 +8,8 @@
         </div>
         <div class="row">
             <q-list>
-                <q-item v-for="player in players" :key="player.id">
-                    <q-item-section>{{player.username}} ({{player.rating}}/{{player.potential}})</q-item-section>
+                <q-item v-for="(player, index) in players" :key="player.id">
+                    <q-item-section>{{player.username}} - {{ages[index]}} ({{player.rating}}/{{player.potential}})</q-item-section>
                 </q-item>
             </q-list>
         </div>
@@ -18,19 +18,26 @@
 
 <script lang="ts">
 import { db } from 'src/ts/db/database'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import getPlayerAge from '../ts/player/getPlayerAge'
 
 export default defineComponent({
     name: 'PageRoster',
     async setup() {
         const route = useRoute()
-        const team = await db.teams.get(parseInt(route.params.tid as string))
+        let team = await db.teams.get(parseInt(route.params.tid as string))
         const players = await db.players.where('team').equals(parseInt(route.params.tid as string)).toArray()
+
+        const ages = ref<number[]>([])
+        for(const player of players) {
+            ages.value.push(await getPlayerAge(player))
+        }
 
         return {
             team,
-            players
+            players,
+            ages
         }
     }
 })
