@@ -14,7 +14,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/g/:gid',
     component: () => import('layouts/GameLayout.vue'),
-    children: [{ path: '', component: () => import('pages/Dashboard.vue') }]
+    children: [
+      { path: '', component: () => import('pages/Dashboard.vue') },
+      { path: 'roster/:tid', component: () => import('pages/Roster.vue') }
+    ]
   },
 
   // Always leave this as last one,

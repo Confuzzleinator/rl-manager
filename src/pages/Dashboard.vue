@@ -1,7 +1,7 @@
 <template>
     <q-page>
         <q-list bordered separator>
-            <q-item v-for="team in teams" :key="team.id" clickable v-ripple>
+            <q-item v-for="team in teams" :key="team.id" clickable v-ripple @click="navRoster(team.id)">
                 <q-item-section avatar>
                     <img :src="team.logo">
                 </q-item-section>
@@ -14,8 +14,9 @@
 </template>
 
 <script lang="ts">
+import { route } from 'quasar/wrappers'
 import { db } from 'src/ts/db/database'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'PageDashboard',
@@ -24,6 +25,11 @@ export default defineComponent({
 
         return {
             teams
+        }
+    },
+    methods: {
+        async navRoster(teamID: number) {
+            await this.$router.push('/g/' + (this.$route.params.gid as string) + '/roster/' + teamID.toString())
         }
     }
 })
